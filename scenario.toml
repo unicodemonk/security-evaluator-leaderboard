@@ -1,3 +1,4 @@
+# Cyber Security Evaluator green agent configuration
 [green_agent]
 agentbeats_id = "019b949a-6e74-7102-9c37-42cc57f24bff"
 env = { LOG_LEVEL = "INFO" }
