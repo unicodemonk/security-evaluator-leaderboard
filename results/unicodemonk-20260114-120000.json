@@ -1,8 +1,7 @@
 [
   {
     "id": "purple_agent",
-    "recall": 0.75,
-    "precision": 0.85,
-    "f1": 0.80
+    "score": 0.80,
+    "accuracy": 0.75
   }
 ]
