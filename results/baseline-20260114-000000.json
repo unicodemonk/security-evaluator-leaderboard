@@ -5,15 +5,9 @@
   "results": [
     {
       "purple_agent_id": "019b949b-4b3e-7800-bf9d-73966e9aec2d",
-      "detail": {
-        "participants": {
-          "purple_agent": {
-            "recall": 0.0,
-            "precision": 0.0,
-            "f1": 0.0
-          }
-        }
-      }
+      "recall": 0.0,
+      "precision": 0.0,
+      "f1": 0.0
     }
   ]
 }
