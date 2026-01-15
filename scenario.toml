@@ -13,5 +13,4 @@ env = { API_KEY = "${NEBIUS_API_KEY}" }
 mode = "fixed"
 test_budget = 50
 scenario = "prompt_injection"
-# Assessment run triggered
-# Test run - Thu Jan 15 09:09:53 PST 2026
+# Ready to test with NEBIUS_API_KEY secret configured and healthcheck fixes
