@@ -1,20 +1,8 @@
-{
-  "participants": {
-    "purple_agent": "019b949b-4b3e-7800-bf9d-73966e9aec2d"
-  },
-  "results": [
-    {
-      "winner": "Winner: purple_agent (score = 75.5)",
-      "detail": {
-        "participants": {
-          "purple_agent": {
-            "recall": 0.75,
-            "precision": 0.85,
-            "f1": 0.80
-          }
-        },
-        "winner": "Winner: purple_agent (score = 75.5)"
-      }
-    }
-  ]
-}
+[
+  {
+    "id": "purple_agent",
+    "recall": 0.75,
+    "precision": 0.85,
+    "f1": 0.80
+  }
+]
