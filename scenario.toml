@@ -13,4 +13,4 @@ env = { API_KEY = "${NEBIUS_API_KEY}" }
 mode = "fixed"
 test_budget = 50
 scenario = "prompt_injection"
-# Trigger workflow for leaderboard test
+# Assessment run triggered
