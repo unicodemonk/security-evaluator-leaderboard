@@ -6,7 +6,7 @@ env = { LOG_LEVEL = "INFO" }
 [[participants]]
 agentbeats_id = "019b949b-4b3e-7800-bf9d-73966e9aec2d"  # Purple agent submitters fill this in
 name = "purple_agent"
-env = { API_KEY = "${NEBIUS_API_KEY}" }
+env = { API_KEY = "${OPENAI_API_KEY}" }
 
 [config]
 # Assessment parameters
