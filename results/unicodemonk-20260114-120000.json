@@ -1,0 +1,12 @@
+[
+  {
+    "id": "purple_agent",
+    "score": 75.5,
+    "accuracy": 0.85
+  },
+  {
+    "id": "baseline",
+    "score": 50.0,
+    "accuracy": 0.60
+  }
+]
