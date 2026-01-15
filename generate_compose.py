@@ -171,7 +171,7 @@ def format_depends_on(services: list) -> str:
     lines = []
     for service in services:
         lines.append(f"      {service}:")
-        lines.append(f"        condition: service_healthy")
+        lines.append(f"        condition: service_started")
     return "\n" + "\n".join(lines)
 
 
