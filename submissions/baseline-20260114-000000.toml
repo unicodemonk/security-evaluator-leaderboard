@@ -4,7 +4,7 @@ env = { LOG_LEVEL = "INFO" }
 
 [[participants]]
 agentbeats_id = "019b949b-4b3e-7800-bf9d-73966e9aec2d"
-name = "purple_homeautomation_agent"
+name = "purple_agent"
 env = { API_KEY = "${OPENAI_API_KEY}" }
 
 [config]
