@@ -4,10 +4,16 @@
   },
   "results": [
     {
-      "status": "baseline",
-      "security_score": 0.0,
+      "security_score": 0,
       "detail": {
-        "message": "Baseline submission - awaiting purple agent evaluation"
+        "participants": {
+          "purple_homeautomation_agent": {
+            "vulnerabilities_found": 0,
+            "security_score": 0.0,
+            "f1_score": 0.0
+          }
+        },
+        "summary": "Baseline submission - awaiting evaluation"
       }
     }
   ]
