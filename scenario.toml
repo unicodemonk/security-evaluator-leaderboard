@@ -4,7 +4,7 @@ agentbeats_id = "019bc047-fec2-76f1-9f1f-a90cf26d6d23"
 env = { LOG_LEVEL = "INFO" }
 
 [[participants]]
-agentbeats_id = "019b949b-4b3e-7800-bf9d-73966e9aec2d"  # Purple agent submitters fill this in
+agentbeats_id = "019b949b-4b3e-7800-bf9d-73966e9aec2d"
 name = "purple_agent"
 env = { API_KEY = "${OPENAI_API_KEY}" }
 
@@ -13,28 +13,3 @@ env = { API_KEY = "${OPENAI_API_KEY}" }
 mode = "fixed"
 test_budget = 10
 scenario = "prompt_injection"
-# Reduced budget for faster completion in CI/CD environment
-
-# Trigger commit: 2026-01-15T00:00:00Z - manual workflow trigger
-
-# Trigger: Thu Jan 16 23:30:25 PST 2026
-
-# Trigger: Thu Jan 15 23:34:05 PST 2026
-
-# Trigger: Fri Jan 16 00:09:35 PST 2026
-
-# Trigger: Fri Jan 16 00:16:32 PST 2026
-
-# Trigger build Fri Jan 16 00:28:42 PST 2026
-
-# Trigger build Fri Jan 16 00:43:27 PST 2026
-
-# Trigger build Fri Jan 16 01:09:55 PST 2026
-
-# Trigger build Fri Jan 16 01:16:21 PST 2026
-
-# Trigger build Fri Jan 16 01:28:36 PST 2026
-# Trigger build Fri Jan 16 01:37:31 PST 2026
-# Trigger build Fri Jan 16 01:41:58 PST 2026 attempt 2
-# Trigger build Fri Jan 16 01:49:00 PST 2026 attempt 3
-# Trigger build Fri Jan 16 01:55:02 PST 2026 attempt 4
