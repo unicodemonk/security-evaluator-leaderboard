@@ -9,7 +9,7 @@ name = "purple_agent"
 env = { API_KEY = "${OPENAI_API_KEY}" }
 
 [config]
-# Assessment parameters
+# Assessment parameters  
 mode = "fixed"
 test_budget = 10
 scenario = "prompt_injection"
