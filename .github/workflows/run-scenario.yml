@@ -4,6 +4,11 @@ on:
   push:
     paths:
       - 'scenario.toml'
+  pull_request:
+    paths:
+      - 'scenario.toml'
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
