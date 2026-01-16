@@ -11,7 +11,9 @@
       "grade": "B-",
       "purple_score": 71.68949771689498,
       "vulnerabilities_found": 62,
-      "total_tests": 249
+      "total_tests": 249,
+      "purple_agent": "home-automation-agent",
+      "purple_agent_id": "019b949b-4b3e-7800-bf9d-73966e9aec2d"
     }
   ]
 }

@@ -143,12 +143,19 @@ jobs:
               with open(result_file) as f:
                   data = json.load(f)
               
+              # Extract purple agent info from participants
+              participants = data.get('participants', {})
+              purple_agent_id = participants.get('purple_agent', 'unknown') if participants else 'unknown'
+              purple_agent_name = data.get('purple_agent_name', purple_agent_id)
+              
               # Create structure matching SOCBench format:
               # { participants: {...}, results: [{...}] }
               flattened = {
-                  'participants': data.get('participants', {}),
+                  'participants': participants,
                   'results': [{
                       'id': data.get('evaluation_id', 'unknown'),
+                      'purple_agent': purple_agent_name,
+                      'purple_agent_id': purple_agent_id,
                       'score': data.get('green_agent_metrics', {}).get('competition_score', 0),
                       'accuracy': data.get('green_agent_metrics', {}).get('accuracy', 0),
                       'f1': data.get('green_agent_metrics', {}).get('f1_score', 0),
