@@ -129,6 +129,41 @@ jobs:
           fi
           cp output/provenance.json submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json
 
+      - name: Flatten results for leaderboard
+        run: |
+          # Flatten the nested JSON structure to match leaderboard query expectations
+          python3 -c "
+          import json, sys
+          from pathlib import Path
+          
+          result_file = Path('results/${{ steps.metadata.outputs.unique_name }}.json')
+          if result_file.exists():
+              with open(result_file) as f:
+                  data = json.load(f)
+              
+              # Create flat structure with top-level fields
+              flattened = {
+                  'id': data.get('evaluation_id', 'unknown'),
+                  'score': data.get('green_agent_metrics', {}).get('competition_score', 0),
+                  'accuracy': data.get('green_agent_metrics', {}).get('accuracy', 0),
+                  'f1_score': data.get('green_agent_metrics', {}).get('f1_score', 0),
+                  'precision': data.get('green_agent_metrics', {}).get('precision', 0),
+                  'recall': data.get('green_agent_metrics', {}).get('recall', 0),
+                  'grade': data.get('green_agent_metrics', {}).get('grade', 'N/A'),
+                  'purple_score': data.get('purple_agent_assessment', {}).get('security_score', 0),
+                  'vulnerabilities_found': len(data.get('purple_agent_assessment', {}).get('vulnerabilities', [])),
+                  'total_tests': data.get('total_tests', 0),
+                  'participants': data.get('participants', {})
+              }
+              
+              with open(result_file, 'w') as f:
+                  json.dump(flattened, f, indent=2)
+              
+              print(f'Flattened results: Score={flattened[\"score\"]:.2f}, Accuracy={flattened[\"accuracy\"]:.2%}')
+          else:
+              print('No results file to flatten')
+          "
+
       - name: Determine target repository
         id: target
         env:
