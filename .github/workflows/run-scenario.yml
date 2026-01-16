@@ -126,6 +126,22 @@ jobs:
           git push origin ${{ steps.metadata.outputs.branch_name }}
           echo "::notice title=Submission Branch Created::Your results are ready for submission on branch: ${{ steps.metadata.outputs.branch_name }}"
 
+      - name: Create Pull Request on target repo
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          TARGET_REPO=${{ steps.target.outputs.repo }}
+          PR_TITLE="Submission: ${{ steps.metadata.outputs.unique_name }}"
+          PR_BODY="Automated submission created by workflow.\n\nWorkflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          PR_HEAD="${{ github.repository_owner }}:${{ steps.metadata.outputs.branch_name }}"
+          echo "Creating PR to ${TARGET_REPO} (head=${PR_HEAD})"
+          API_URL="https://api.github.com/repos/${TARGET_REPO}/pulls"
+          PAYLOAD=$(jq -n --arg title "$PR_TITLE" --arg head "$PR_HEAD" --arg base "main" --arg body "$PR_BODY" '{title:$title, head:$head, base:$base, body:$body, maintainer_can_modify:false}')
+          RESPONSE=$(curl -s -o /dev/stderr -w "%{http_code}" -X POST -H "Authorization: token ${GH_TOKEN}" -H "Accept: application/vnd.github+json" ${API_URL} -d "$PAYLOAD" ) || true
+          echo "PR creation response: $RESPONSE"
+
       - name: Output PR link
         run: |
           echo "### Submit your results" >> $GITHUB_STEP_SUMMARY
