@@ -161,7 +161,7 @@ jobs:
                       'f1': data.get('green_agent_metrics', {}).get('f1_score', 0),
                       'precision': data.get('green_agent_metrics', {}).get('precision', 0),
                       'recall': data.get('green_agent_metrics', {}).get('recall', 0),
-                      'grade': data.get('green_agent_metrics', {}).get('grade', 'N/A'),
+                      'grade': data.get('purple_agent_assessment', {}).get('security_grade', 'N/A'),
                       'purple_score': data.get('purple_agent_assessment', {}).get('security_score', 0),
                       'vulnerabilities_found': len(data.get('purple_agent_assessment', {}).get('vulnerabilities', [])),
                       'total_tests': data.get('total_tests', 0)

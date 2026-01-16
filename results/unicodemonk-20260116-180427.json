@@ -1,19 +1,19 @@
 {
-  "participants": null,
+  "participants": {},
   "results": [
     {
       "id": "eval_unknown_20260116_180426",
-      "score": 81.04575163398692,
-      "accuracy": 0.8835341365461847,
-      "f1": 0.8104575163398693,
-      "precision": 0.6813186813186813,
+      "purple_agent": "unknown",
+      "purple_agent_id": "019b949b-4b3e-7800-bf9d-73966e9aec2d",
+      "score": 81.05,
+      "accuracy": 0.88,
+      "f1": 0.81,
+      "precision": 0.68,
       "recall": 1.0,
-      "grade": "B-",
-      "purple_score": 71.68949771689498,
+      "grade": "C-",
+      "purple_score": 71.69,
       "vulnerabilities_found": 62,
-      "total_tests": 249,
-      "purple_agent": "home-automation-agent",
-      "purple_agent_id": "019b949b-4b3e-7800-bf9d-73966e9aec2d"
+      "total_tests": 249
     }
   ]
 }
