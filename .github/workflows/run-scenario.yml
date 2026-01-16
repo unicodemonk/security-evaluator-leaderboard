@@ -111,12 +111,21 @@ jobs:
       - name: Copy files to submission directory
         run: |
           cp scenario.toml submissions/${{ steps.metadata.outputs.unique_name }}.toml
-          # Find and copy the most recent JSON file from output
-          RESULT_JSON=$(ls -t output/*.json 2>/dev/null | head -1)
+          # Find and copy the dual evaluation results file
+          RESULT_JSON=$(ls -t output/dual_evaluation_eval_*.json 2>/dev/null | head -1)
           if [ -n "$RESULT_JSON" ]; then
             cp "$RESULT_JSON" results/${{ steps.metadata.outputs.unique_name }}.json
+            echo "Copied evaluation results: $RESULT_JSON"
           else
-            echo "{\"error\": \"No results file generated\"}" > results/${{ steps.metadata.outputs.unique_name }}.json
+            echo "Warning: No dual evaluation results file found"
+            # Fallback to any JSON file
+            RESULT_JSON=$(ls -t output/*.json 2>/dev/null | grep -v provenance | head -1)
+            if [ -n "$RESULT_JSON" ]; then
+              cp "$RESULT_JSON" results/${{ steps.metadata.outputs.unique_name }}.json
+              echo "Copied fallback results: $RESULT_JSON"
+            else
+              echo "{\"error\": \"No results file generated\"}" > results/${{ steps.metadata.outputs.unique_name }}.json
+            fi
           fi
           cp output/provenance.json submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json
 
