@@ -128,6 +128,15 @@ jobs:
             fi
           fi
           cp output/provenance.json submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json
+          
+          # Preserve detailed evaluation before flattening
+          if [ -f "output/dual_evaluation_eval_"*".json" ]; then
+            DETAILED_FILE=$(ls -t output/dual_evaluation_eval_*.json 2>/dev/null | head -1)
+            if [ -n "$DETAILED_FILE" ]; then
+              cp "$DETAILED_FILE" results/${{ steps.metadata.outputs.unique_name }}.detailed.json
+              echo "Preserved detailed evaluation: $DETAILED_FILE"
+            fi
+          fi
 
       - name: Flatten results for leaderboard
         run: |
