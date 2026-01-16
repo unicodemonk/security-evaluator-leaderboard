@@ -137,6 +137,32 @@ jobs:
               echo "Preserved detailed evaluation: $DETAILED_FILE"
             fi
           fi
+          
+          # Preserve markdown reports with attack/response details
+          if [ -f "output/PURPLE_AGENT_"*".md" ]; then
+            PURPLE_REPORT=$(ls -t output/PURPLE_AGENT_*.md 2>/dev/null | head -1)
+            if [ -n "$PURPLE_REPORT" ]; then
+              cp "$PURPLE_REPORT" results/${{ steps.metadata.outputs.unique_name }}.purple_report.md
+              echo "Preserved purple agent report: $PURPLE_REPORT"
+            fi
+          fi
+          
+          if [ -f "output/GREEN_AGENT_"*".md" ]; then
+            GREEN_REPORT=$(ls -t output/GREEN_AGENT_*.md 2>/dev/null | head -1)
+            if [ -n "$GREEN_REPORT" ]; then
+              cp "$GREEN_REPORT" results/${{ steps.metadata.outputs.unique_name }}.green_report.md
+              echo "Preserved green agent report: $GREEN_REPORT"
+            fi
+          fi
+          
+          # Preserve purple agent evaluation JSON (has response details)
+          if [ -f "output/purple_agent_eval_"*".json" ]; then
+            PURPLE_EVAL=$(ls -t output/purple_agent_eval_*.json 2>/dev/null | head -1)
+            if [ -n "$PURPLE_EVAL" ]; then
+              cp "$PURPLE_EVAL" results/${{ steps.metadata.outputs.unique_name }}.purple_eval.json
+              echo "Preserved purple agent evaluation: $PURPLE_EVAL"
+            fi
+          fi
 
       - name: Flatten results for leaderboard
         run: |
@@ -206,9 +232,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add submissions/${{ steps.metadata.outputs.unique_name }}.toml submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json results/${{ steps.metadata.outputs.unique_name }}.json
-          # Also add detailed evaluation file if it exists
+          # Also add detailed evaluation files if they exist
           if [ -f results/${{ steps.metadata.outputs.unique_name }}.detailed.json ]; then
             git add results/${{ steps.metadata.outputs.unique_name }}.detailed.json
+          fi
+          if [ -f results/${{ steps.metadata.outputs.unique_name }}.purple_report.md ]; then
+            git add results/${{ steps.metadata.outputs.unique_name }}.purple_report.md
+          fi
+          if [ -f results/${{ steps.metadata.outputs.unique_name }}.green_report.md ]; then
+            git add results/${{ steps.metadata.outputs.unique_name }}.green_report.md
+          fi
+          if [ -f results/${{ steps.metadata.outputs.unique_name }}.purple_eval.json ]; then
+            git add results/${{ steps.metadata.outputs.unique_name }}.purple_eval.json
           fi
           git commit -m "Submission: ${{ steps.metadata.outputs.unique_name }}
           
