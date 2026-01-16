@@ -60,6 +60,7 @@ COMPOSE_TEMPLATE = """# Auto-generated from scenario.toml
 services:
   green-agent:
     image: {green_image}
+    pull_policy: always
     platform: linux/amd64
     container_name: green-agent
     command: ["--host", "0.0.0.0", "--port", "{green_port}", "--card-url", "http://green-agent:{green_port}"]
@@ -94,6 +95,7 @@ networks:
 
 PARTICIPANT_TEMPLATE = """  {name}:
     image: {image}
+    pull_policy: always
     platform: linux/amd64
     container_name: {name}
     command: ["--host", "0.0.0.0", "--port", "{port}", "--card-url", "http://{name}:{port}"]
