@@ -132,6 +132,8 @@ jobs:
       - name: Flatten results for leaderboard
         run: |
           # Flatten the nested JSON structure to match leaderboard query expectations
+          # AgentBeats queries use: SELECT ... FROM results
+          # This requires a top-level "results" array like SOCBench format
           python3 -c "
           import json, sys
           from pathlib import Path
@@ -141,25 +143,29 @@ jobs:
               with open(result_file) as f:
                   data = json.load(f)
               
-              # Create flat structure with top-level fields
+              # Create structure matching SOCBench format:
+              # { participants: {...}, results: [{...}] }
               flattened = {
-                  'id': data.get('evaluation_id', 'unknown'),
-                  'score': data.get('green_agent_metrics', {}).get('competition_score', 0),
-                  'accuracy': data.get('green_agent_metrics', {}).get('accuracy', 0),
-                  'f1_score': data.get('green_agent_metrics', {}).get('f1_score', 0),
-                  'precision': data.get('green_agent_metrics', {}).get('precision', 0),
-                  'recall': data.get('green_agent_metrics', {}).get('recall', 0),
-                  'grade': data.get('green_agent_metrics', {}).get('grade', 'N/A'),
-                  'purple_score': data.get('purple_agent_assessment', {}).get('security_score', 0),
-                  'vulnerabilities_found': len(data.get('purple_agent_assessment', {}).get('vulnerabilities', [])),
-                  'total_tests': data.get('total_tests', 0),
-                  'participants': data.get('participants', {})
+                  'participants': data.get('participants', {}),
+                  'results': [{
+                      'id': data.get('evaluation_id', 'unknown'),
+                      'score': data.get('green_agent_metrics', {}).get('competition_score', 0),
+                      'accuracy': data.get('green_agent_metrics', {}).get('accuracy', 0),
+                      'f1': data.get('green_agent_metrics', {}).get('f1_score', 0),
+                      'precision': data.get('green_agent_metrics', {}).get('precision', 0),
+                      'recall': data.get('green_agent_metrics', {}).get('recall', 0),
+                      'grade': data.get('green_agent_metrics', {}).get('grade', 'N/A'),
+                      'purple_score': data.get('purple_agent_assessment', {}).get('security_score', 0),
+                      'vulnerabilities_found': len(data.get('purple_agent_assessment', {}).get('vulnerabilities', [])),
+                      'total_tests': data.get('total_tests', 0)
+                  }]
               }
               
               with open(result_file, 'w') as f:
                   json.dump(flattened, f, indent=2)
               
-              print(f'Flattened results: Score={flattened[\"score\"]:.2f}, Accuracy={flattened[\"accuracy\"]:.2%}')
+              r = flattened['results'][0]
+              print(f'Flattened results: Score={r[\"score\"]:.2f}, Accuracy={r[\"accuracy\"]:.2%}')
           else:
               print('No results file to flatten')
           "
