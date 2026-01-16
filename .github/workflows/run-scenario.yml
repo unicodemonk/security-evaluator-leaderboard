@@ -82,6 +82,15 @@ jobs:
       - name: Run assessment
         run: docker compose --env-file .env up --timestamps --no-color --exit-code-from agentbeats-client || true
 
+      - name: Debug output directory
+        run: |
+          echo "=== Output directory contents ==="
+          ls -la output/ || echo "No output directory"
+          echo "=== Results directory contents ==="
+          ls -la results/ || echo "No results directory"
+          echo "=== Finding JSON files ==="
+          find . -name "*.json" -type f | grep -v node_modules || echo "No JSON files found"
+
       - name: Record provenance
         run: python record_provenance.py --compose docker-compose.yml --output output/provenance.json
 
