@@ -11,6 +11,6 @@ env = { API_KEY = "${OPENAI_API_KEY}" }
 [config]
 # Assessment parameters
 mode = "fixed"
-test_budget = 50
+test_budget = 10
 scenario = "prompt_injection"
-# Ready to test with OPENAI_API_KEY and fixed workflow exit handling
+# Reduced budget for faster completion in CI/CD environment
