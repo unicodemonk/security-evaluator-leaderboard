@@ -206,6 +206,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add submissions/${{ steps.metadata.outputs.unique_name }}.toml submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json results/${{ steps.metadata.outputs.unique_name }}.json
+          # Also add detailed evaluation file if it exists
+          if [ -f results/${{ steps.metadata.outputs.unique_name }}.detailed.json ]; then
+            git add results/${{ steps.metadata.outputs.unique_name }}.detailed.json
+          fi
           git commit -m "Submission: ${{ steps.metadata.outputs.unique_name }}
           
           Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
