@@ -2,9 +2,9 @@
   "participants": {},
   "results": [
     {
-      "id": "eval_unknown_20260117_033610",
-      "purple_agent": "unknown",
-      "purple_agent_id": "unknown",
+      "id": "eval_019bb6fa-67ad-7fe1-8b90-e96bf9e355e3_20260117_033610",
+      "purple_agent": "SOCBench Agent",
+      "purple_agent_id": "019bb6fa-67ad-7fe1-8b90-e96bf9e355e3",
       "score": 0.0,
       "accuracy": 0.9224806201550387,
       "f1": 0.0,
