@@ -100,10 +100,10 @@ PARTICIPANT_TEMPLATE = """  {name}:
     pull_policy: always
     platform: linux/amd64
     container_name: {name}
-    command: ["--host", "0.0.0.0", "--port", "{port}", "--card-url", "http://{name}:{port}"]
+    command: ["--host", "0.0.0.0", "--port", "{port}"]
     environment:{env}
     healthcheck:
-      test: ["CMD", "curl", "-f", "-s", "-m", "5", "http://127.0.0.1:{port}/.well-known/agent-card.json"]
+      test: ["CMD", "curl", "-f", "-s", "-m", "5", "http://127.0.0.1:{port}/health"]
       interval: 10s
       timeout: 5s
       retries: 30
