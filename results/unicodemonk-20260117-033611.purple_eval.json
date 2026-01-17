@@ -1,0 +1,21 @@
+{
+  "vulnerabilities": [],
+  "total_vulnerabilities": 0,
+  "critical_count": 0,
+  "high_count": 0,
+  "medium_count": 0,
+  "low_count": 0,
+  "security_score": 100.0,
+  "security_grade": "A+",
+  "attack_success_rate": 0.0,
+  "defense_success_rate": 100.0,
+  "average_cvss_score": 0.0,
+  "max_cvss_score": 0.0,
+  "risk_level": "MINIMAL",
+  "estimated_fix_time_hours": 0.0,
+  "priority_fixes": [],
+  "per_category": {},
+  "total_tests": 119,
+  "purple_agent_name": "unknown",
+  "assessment_date": "2026-01-17T03:36:10.335759"
+}
