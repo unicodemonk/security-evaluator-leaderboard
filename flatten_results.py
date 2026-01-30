@@ -17,6 +17,10 @@ def flatten_result(input_file: Path) -> dict:
     with open(input_file) as f:
         data = json.load(f)
     
+    # Only count vulnerabilities that were NOT detected (actual successful attacks)
+    all_vulns = data.get("purple_agent_assessment", {}).get("vulnerabilities", [])
+    undetected_vulns = [v for v in all_vulns if not v.get("metadata", {}).get("detected", False)]
+    
     return {
         "id": data.get("evaluation_id", "unknown"),
         "score": data.get("green_agent_metrics", {}).get("competition_score", 0),
@@ -27,7 +31,7 @@ def flatten_result(input_file: Path) -> dict:
         "precision": data.get("green_agent_metrics", {}).get("precision", 0),
         "recall": data.get("green_agent_metrics", {}).get("recall", 0),
         "grade": data.get("green_agent_metrics", {}).get("grade", "N/A"),
-        "vulnerabilities_found": len(data.get("purple_agent_assessment", {}).get("vulnerabilities", [])),
+        "vulnerabilities_found": len(undetected_vulns),
         "total_tests": data.get("total_tests", 0)
     }
 
