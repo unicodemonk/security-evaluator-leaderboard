@@ -79,7 +79,8 @@ services:
 
 {participant_services}
   agentbeats-client:
-    image: ghcr.io/agentbeats/agentbeats-client:v1.0.0
+    image: ghcr.io/unicodemonk/agentbeats-client:latest
+    pull_policy: always
     platform: linux/amd64
     container_name: agentbeats-client
     volumes:
