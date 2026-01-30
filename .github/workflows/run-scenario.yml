@@ -183,6 +183,10 @@ jobs:
               purple_agent_id = participants.get('purple_agent', 'unknown') if participants else 'unknown'
               purple_agent_name = data.get('purple_agent_name', purple_agent_id)
               
+              # Only count undetected vulnerabilities (actual successful attacks)
+              all_vulns = data.get('purple_agent_assessment', {}).get('vulnerabilities', [])
+              undetected_vulns = [v for v in all_vulns if not v.get('metadata', {}).get('detected', False)]
+              
               # Create structure matching SOCBench format:
               # { participants: {...}, results: [{...}] }
               flattened = {
@@ -198,7 +202,7 @@ jobs:
                       'recall': data.get('green_agent_metrics', {}).get('recall', 0),
                       'grade': data.get('purple_agent_assessment', {}).get('security_grade', 'N/A'),
                       'purple_score': data.get('purple_agent_assessment', {}).get('security_score', 0),
-                      'vulnerabilities_found': len(data.get('purple_agent_assessment', {}).get('vulnerabilities', [])),
+                      'vulnerabilities_found': len(undetected_vulns),
                       'total_tests': data.get('total_tests', 0)
                   }]
               }
