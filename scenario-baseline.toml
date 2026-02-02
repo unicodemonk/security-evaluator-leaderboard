@@ -1,0 +1,14 @@
+# Cyber Security Evaluator - Baseline Purple Agent Test
+[green_agent]
+agentbeats_id = "019bc047-fec2-76f1-9f1f-a90cf26d6d23"
+env = { LOG_LEVEL = "DEBUG" }
+
+[[participants]]
+agentbeats_id = "019b949b-4b3e-7800-bf9d-73966e9aec2d"
+name = "purple_agent"
+env = { API_KEY = "${OPENAI_API_KEY}" }
+
+[config]
+mode = "fixed"
+test_budget = 10
+scenario = "prompt_injection"

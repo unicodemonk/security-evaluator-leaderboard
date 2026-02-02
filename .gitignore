@@ -4,3 +4,15 @@ a2a-scenario.toml
 .env
 .env.example
 output/
+
+# Video files (keep final only)
+*.mov
+*.mp4
+!CybersecurityEvaluator*by*Team*.mp4
+
+# Logs
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
