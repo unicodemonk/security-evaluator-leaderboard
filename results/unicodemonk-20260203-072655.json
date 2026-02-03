@@ -1,0 +1,19 @@
+{
+  "participants": {},
+  "results": [
+    {
+      "id": "eval_unknown_20260203_072654",
+      "purple_agent": "unknown",
+      "purple_agent_id": "unknown",
+      "score": 86.63594470046084,
+      "accuracy": 0.8835341365461847,
+      "f1": 0.8663594470046084,
+      "precision": 0.7642276422764228,
+      "recall": 1.0,
+      "grade": "F",
+      "purple_score": 57.077625570776256,
+      "vulnerabilities_found": 0,
+      "total_tests": 249
+    }
+  ]
+}
