@@ -124,7 +124,10 @@ jobs:
               cp "$RESULT_JSON" results/${{ steps.metadata.outputs.unique_name }}.json
               echo "Copied fallback results: $RESULT_JSON"
             else
-              echo "{\"error\": \"No results file generated\"}" > results/${{ steps.metadata.outputs.unique_name }}.json
+              # Extract purple agent info from scenario.toml for error reporting
+              PURPLE_AGENT_ID=$(grep -A2 '^\[\[participants\]\]' scenario.toml | grep 'agentbeats_id' | head -1 | sed 's/.*= *"\(.*\)".*/\1/')
+              PURPLE_AGENT_NAME=$(grep -A2 '^\[\[participants\]\]' scenario.toml | grep 'name' | head -1 | sed 's/.*= *"\(.*\)".*/\1/')
+              echo "{\"error\": \"No results file generated\", \"purple_agent_id\": \"${PURPLE_AGENT_ID}\", \"purple_agent_name\": \"${PURPLE_AGENT_NAME}\"}" > results/${{ steps.metadata.outputs.unique_name }}.json
             fi
           fi
           cp output/provenance.json submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json
@@ -178,34 +181,57 @@ jobs:
               with open(result_file) as f:
                   data = json.load(f)
               
-              # Extract purple agent info from participants
-              participants = data.get('participants', {})
-              purple_agent_id = participants.get('purple_agent', 'unknown') if participants else 'unknown'
-              purple_agent_name = data.get('purple_agent_name', purple_agent_id)
-              
-              # Only count undetected vulnerabilities (actual successful attacks)
-              all_vulns = data.get('purple_agent_assessment', {}).get('vulnerabilities', [])
-              undetected_vulns = [v for v in all_vulns if not v.get('metadata', {}).get('detected', False)]
-              
-              # Create structure matching SOCBench format:
-              # { participants: {...}, results: [{...}] }
-              flattened = {
-                  'participants': participants,
-                  'results': [{
-                      'id': data.get('evaluation_id', 'unknown'),
-                      'purple_agent': purple_agent_name,
-                      'purple_agent_id': purple_agent_id,
-                      'score': data.get('green_agent_metrics', {}).get('competition_score', 0),
-                      'accuracy': data.get('green_agent_metrics', {}).get('accuracy', 0),
-                      'f1': data.get('green_agent_metrics', {}).get('f1_score', 0),
-                      'precision': data.get('green_agent_metrics', {}).get('precision', 0),
-                      'recall': data.get('green_agent_metrics', {}).get('recall', 0),
-                      'grade': data.get('purple_agent_assessment', {}).get('security_grade', 'N/A'),
-                      'purple_score': data.get('purple_agent_assessment', {}).get('security_score', 0),
-                      'vulnerabilities_found': len(undetected_vulns),
-                      'total_tests': data.get('total_tests', 0)
-                  }]
-              }
+              # Check if this is an error result
+              if 'error' in data and 'purple_agent_assessment' not in data:
+                  # Error case - create minimal result with agent info from error payload
+                  purple_agent_id = data.get('purple_agent_id', 'unknown')
+                  purple_agent_name = data.get('purple_agent_name', purple_agent_id)
+                  flattened = {
+                      'participants': {},
+                      'results': [{
+                          'id': 'unknown',
+                          'purple_agent': purple_agent_name,
+                          'purple_agent_id': purple_agent_id,
+                          'score': 0,
+                          'accuracy': 0,
+                          'f1': 0,
+                          'precision': 0,
+                          'recall': 0,
+                          'grade': 'N/A',
+                          'purple_score': 0,
+                          'vulnerabilities_found': 0,
+                          'total_tests': 0
+                      }]
+                  }
+              else:
+                  # Normal case - extract purple agent info from participants
+                  participants = data.get('participants', {})
+                  purple_agent_id = participants.get('purple_agent', 'unknown') if participants else 'unknown'
+                  purple_agent_name = data.get('purple_agent_name', purple_agent_id)
+                  
+                  # Only count undetected vulnerabilities (actual successful attacks)
+                  all_vulns = data.get('purple_agent_assessment', {}).get('vulnerabilities', [])
+                  undetected_vulns = [v for v in all_vulns if not v.get('metadata', {}).get('detected', False)]
+                  
+                  # Create structure matching SOCBench format:
+                  # { participants: {...}, results: [{...}] }
+                  flattened = {
+                      'participants': participants,
+                      'results': [{
+                          'id': data.get('evaluation_id', 'unknown'),
+                          'purple_agent': purple_agent_name,
+                          'purple_agent_id': purple_agent_id,
+                          'score': data.get('green_agent_metrics', {}).get('competition_score', 0),
+                          'accuracy': data.get('green_agent_metrics', {}).get('accuracy', 0),
+                          'f1': data.get('green_agent_metrics', {}).get('f1_score', 0),
+                          'precision': data.get('green_agent_metrics', {}).get('precision', 0),
+                          'recall': data.get('green_agent_metrics', {}).get('recall', 0),
+                          'grade': data.get('purple_agent_assessment', {}).get('security_grade', 'N/A'),
+                          'purple_score': data.get('purple_agent_assessment', {}).get('security_score', 0),
+                          'vulnerabilities_found': len(undetected_vulns),
+                          'total_tests': data.get('total_tests', 0)
+                      }]
+                  }
               
               with open(result_file, 'w') as f:
                   json.dump(flattened, f, indent=2)
