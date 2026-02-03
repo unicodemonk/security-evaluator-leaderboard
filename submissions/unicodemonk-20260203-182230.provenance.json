@@ -1,0 +1,17 @@
+{
+  "image_digests": {
+    "green-agent": "ghcr.io/unicodemonk/cyber-security-evaluator/green-agent@sha256:1c8e61e8cc4942d0d584957dd9c63518031a95246b1c3e9e5545d72a9a6ddc6d",
+    "purple_agent": "ghcr.io/erenzq/purple-agent@sha256:9047d7d0da563d8ddc7af24381db20b91157adb40511e6cad6b7c7d24fc66fd8",
+    "agentbeats-client": "ghcr.io/agentbeats/agentbeats-client@sha256:13dfe3ef4e583a80e7ce2fe3becd0ce3b879841368a7f4fa40b6ebbabeeb014e"
+  },
+  "timestamp": "2026-02-03T18:22:30Z",
+  "github_actions": {
+    "run_url": "https://github.com/unicodemonk/security-evaluator-leaderboard/actions/runs/21642243990",
+    "run_logs_url": "https://api.github.com/repos/unicodemonk/security-evaluator-leaderboard/actions/runs/21642243990/logs",
+    "ref": "refs/heads/main",
+    "sha": "92876fe6ce9ff0135badd27717897d11402e210b",
+    "repository_url": "https://github.com/unicodemonk/security-evaluator-leaderboard",
+    "workflow_ref": "unicodemonk/security-evaluator-leaderboard/.github/workflows/run-scenario.yml@refs/heads/main",
+    "workflow_sha": "92876fe6ce9ff0135badd27717897d11402e210b"
+  }
+}
