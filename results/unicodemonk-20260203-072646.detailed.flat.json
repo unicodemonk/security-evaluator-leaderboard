@@ -9,5 +9,8 @@
   "recall": 1.0,
   "grade": "A+",
   "vulnerabilities_found": 0,
-  "total_tests": 249
+  "total_tests": 249,
+  "status": "",
+  "error": "",
+  "notes": ""
 }

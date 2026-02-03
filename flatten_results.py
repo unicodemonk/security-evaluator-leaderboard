@@ -54,7 +54,10 @@ def flatten_result(input_file: Path) -> dict:
         "recall": data.get("green_agent_metrics", {}).get("recall", 0),
         "grade": data.get("green_agent_metrics", {}).get("grade", "N/A"),
         "vulnerabilities_found": len(undetected_vulns),
-        "total_tests": data.get("total_tests", 0)
+        "total_tests": data.get("total_tests", 0),
+        "status": "",
+        "error": "",
+        "notes": ""
     }
 
 def main():
