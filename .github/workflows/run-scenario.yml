@@ -127,7 +127,7 @@ jobs:
               # Extract purple agent info from scenario.toml for error reporting
               PURPLE_AGENT_ID=$(grep -A2 '^\[\[participants\]\]' scenario.toml | grep 'agentbeats_id' | head -1 | sed 's/.*= *"\(.*\)".*/\1/')
               PURPLE_AGENT_NAME=$(grep -A2 '^\[\[participants\]\]' scenario.toml | grep 'name' | head -1 | sed 's/.*= *"\(.*\)".*/\1/')
-              echo "{\"error\": \"No results file generated\", \"purple_agent_id\": \"${PURPLE_AGENT_ID}\", \"purple_agent_name\": \"${PURPLE_AGENT_NAME}\"}" > results/${{ steps.metadata.outputs.unique_name }}.json
+              echo "{\"error\": \"Evaluation failed: All tests invalid (protocol incompatibility)\", \"purple_agent_id\": \"${PURPLE_AGENT_ID}\", \"purple_agent_name\": \"${PURPLE_AGENT_NAME}\"}" > results/${{ steps.metadata.outputs.unique_name }}.json
             fi
           fi
           cp output/provenance.json submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json
@@ -186,6 +186,7 @@ jobs:
                   # Error case - create minimal result with agent info from error payload
                   purple_agent_id = data.get('purple_agent_id', 'unknown')
                   purple_agent_name = data.get('purple_agent_name', purple_agent_id)
+                  error_msg = data.get('error', 'Evaluation failed')
                   flattened = {
                       'participants': {},
                       'results': [{
@@ -197,10 +198,13 @@ jobs:
                           'f1': 0,
                           'precision': 0,
                           'recall': 0,
-                          'grade': 'N/A',
+                          'grade': 'ERROR',
                           'purple_score': 0,
                           'vulnerabilities_found': 0,
-                          'total_tests': 0
+                          'total_tests': 0,
+                          'status': 'evaluation_failed',
+                          'error': error_msg,
+                          'notes': 'All tests marked invalid due to protocol/communication errors. Agent may not be compatible with evaluator protocol.'
                       }]
                   }
               else:
