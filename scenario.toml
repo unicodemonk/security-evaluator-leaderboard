@@ -1,4 +1,4 @@
-# Cyber Security Evaluator - Home Automation Purple Agent Test
+# Evaluate socbench-agent - Run 1
 [green_agent]
 agentbeats_id = "019bc047-fec2-76f1-9f1f-a90cf26d6d23"
 env = { LOG_LEVEL = "DEBUG" }
