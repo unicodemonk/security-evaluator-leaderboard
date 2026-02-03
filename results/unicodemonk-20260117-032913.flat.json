@@ -1,0 +1,17 @@
+{
+  "id": "eval_unknown_20260117_032913",
+  "score": 100.0,
+  "accuracy": 1.0,
+  "timestamp": "",
+  "purple_agent": "unknown",
+  "purple_agent_id": "unknown",
+  "f1_score": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "grade": "F",
+  "vulnerabilities_found": 219,
+  "total_tests": 249,
+  "status": "",
+  "error": "",
+  "notes": ""
+}

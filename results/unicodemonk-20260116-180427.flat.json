@@ -1,13 +1,17 @@
 {
   "id": "eval_unknown_20260116_180426",
-  "score": 81.04575163398692,
-  "accuracy": 0.8835341365461847,
-  "timestamp": "2026-01-16T18:04:26.873719",
+  "score": 81.05,
+  "accuracy": 0.88,
+  "timestamp": "",
   "purple_agent": "unknown",
-  "f1_score": 0.8104575163398693,
-  "precision": 0.6813186813186813,
+  "purple_agent_id": "019b949b-4b3e-7800-bf9d-73966e9aec2d",
+  "f1_score": 0.81,
+  "precision": 0.68,
   "recall": 1.0,
-  "grade": "B-",
+  "grade": "C-",
   "vulnerabilities_found": 62,
-  "total_tests": 249
+  "total_tests": 249,
+  "status": "",
+  "error": "",
+  "notes": ""
 }

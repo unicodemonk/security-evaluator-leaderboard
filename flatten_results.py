@@ -17,6 +17,28 @@ def flatten_result(input_file: Path) -> dict:
     with open(input_file) as f:
         data = json.load(f)
     
+    # Check if this is the new flattened format (with results array)
+    if "results" in data and isinstance(data["results"], list) and len(data["results"]) > 0:
+        result = data["results"][0]
+        return {
+            "id": result.get("id", "unknown"),
+            "score": result.get("score", 0),
+            "accuracy": result.get("accuracy", 0),
+            "timestamp": "",
+            "purple_agent": result.get("purple_agent", "unknown"),
+            "purple_agent_id": result.get("purple_agent_id", "unknown"),
+            "f1_score": result.get("f1", 0),
+            "precision": result.get("precision", 0),
+            "recall": result.get("recall", 0),
+            "grade": result.get("grade", "N/A"),
+            "vulnerabilities_found": result.get("vulnerabilities_found", 0),
+            "total_tests": result.get("total_tests", 0),
+            "status": result.get("status", ""),
+            "error": result.get("error", ""),
+            "notes": result.get("notes", "")
+        }
+    
+    # Otherwise use old detailed format
     # Only count vulnerabilities that were NOT detected (actual successful attacks)
     all_vulns = data.get("purple_agent_assessment", {}).get("vulnerabilities", [])
     undetected_vulns = [v for v in all_vulns if not v.get("metadata", {}).get("detected", False)]
