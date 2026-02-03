@@ -13,7 +13,10 @@
       "grade": "N/A",
       "purple_score": 0,
       "vulnerabilities_found": 0,
-      "total_tests": 0
+      "total_tests": 0,
+      "status": "",
+      "error": "",
+      "notes": ""
     }
   ]
 }

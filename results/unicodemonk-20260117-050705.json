@@ -13,7 +13,10 @@
       "grade": "F",
       "purple_score": 0.0,
       "vulnerabilities_found": 219,
-      "total_tests": 249
+      "total_tests": 249,
+      "status": "",
+      "error": "",
+      "notes": ""
     }
   ]
 }
