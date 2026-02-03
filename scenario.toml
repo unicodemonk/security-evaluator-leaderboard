@@ -1,4 +1,4 @@
-# Re-evaluate socbench-agent with debug logging to diagnose is_valid filtering
+# Re-evaluate socbench-agent with is_valid field copying fix
 [green_agent]
 agentbeats_id = "019bc047-fec2-76f1-9f1f-a90cf26d6d23"
 env = { LOG_LEVEL = "DEBUG" }
