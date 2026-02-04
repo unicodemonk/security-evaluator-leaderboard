@@ -1,31 +1,23 @@
-# Results Directory
+# Results Directory Structure
 
-## File Types
+This directory contains evaluation results for the Security Evaluator leaderboard.
 
-### Main Result Files (for leaderboard)
-- Pattern: `unicodemonk-YYYYMMDD-HHMMSS.json`
-- Format: `{"participants": {}, "results": [{...}]}`
-- Example: `unicodemonk-20260204-014353.json`
-- **Structure**: Nested with results array (required for AgentBeats DuckDB query)
+## Directory Layout
 
-### Detailed Evaluation Files
-- Pattern: `*.detailed.json`
-- Format: Full evaluation data with all test results
-- Not used for leaderboard display
+```
+results/
+├── unicodemonk-YYYYMMDD-HHMMSS.json    # Main result files (nested structure)
+└── supplementary/                        # Detailed reports and intermediate files
+    ├── *.detailed.json                  # Full evaluation details
+    ├── *.purple_eval.json               # Purple agent assessment data
+    ├── *.green_report.md                # Human-readable green agent report
+    ├── *.purple_report.md               # Human-readable purple agent report
+    └── *.flat.json                      # Legacy flattened files (archived)
+```
 
-### Purple Agent Reports
-- Pattern: `*.purple_eval.json`, `*.purple_report.md`
-- Format: Purple agent specific data
-- Not used for leaderboard display
+## File Format
 
-### Green Agent Reports
-- Pattern: `*.green_report.md`
-- Format: Green agent specific data
-- Not used for leaderboard display
-
-## DuckDB Query Structure
-
-AgentBeats expects the SOCBench-compatible nested format:
+All main result files in `results/` (not `supplementary/`) follow the nested JSON structure required by AgentBeats DuckDB queries:
 
 ```json
 {
@@ -43,5 +35,10 @@ AgentBeats expects the SOCBench-compatible nested format:
 }
 ```
 
-The DuckDB query accesses the `results` array from each JSON file.
-Each file contains ONE evaluation with results array containing ONE result object.
+## Important Notes
+
+- **ONLY** main result files should be in `results/` - supplementary files go in `supplementary/`
+- Each main file contains ONE evaluation with a results array containing ONE result object
+- The nested structure `{"participants": {}, "results": [...]}` is REQUIRED for AgentBeats compatibility
+- DO NOT flatten to `{id, purple_agent, ...}` - this breaks the DuckDB query
+- Detailed/purple_eval/report files have different structures and must be in `supplementary/`
