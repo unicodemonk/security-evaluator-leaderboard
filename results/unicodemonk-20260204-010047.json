@@ -3,8 +3,8 @@
   "results": [
     {
       "id": "eval_unknown_20260204_010046",
-      "purple_agent": "unknown",
-      "purple_agent_id": "unknown",
+      "purple_agent": "home-automation-agent",
+      "purple_agent_id": "019b949b-4b3e-7800-bf9d-73966e9aec2d",
       "score": 84.15300546448087,
       "accuracy": 0.8835341365461847,
       "f1": 0.8415300546448087,
