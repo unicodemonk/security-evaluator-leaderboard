@@ -1,4 +1,4 @@
-# Re-evaluate Home Automation Agent with current Docker images
+# Home Automation Agent Security Evaluation
 [green_agent]
 agentbeats_id = "019bc047-fec2-76f1-9f1f-a90cf26d6d23"
 env = { LOG_LEVEL = "DEBUG" }
@@ -12,4 +12,3 @@ env = { API_KEY = "${OPENAI_API_KEY}", NEBIUS_API_KEY = "${NEBIUS_API_KEY}" }
 mode = "fixed"
 test_budget = 10
 scenario = "prompt_injection"
-# Testing if A2A fix broke evaluations
