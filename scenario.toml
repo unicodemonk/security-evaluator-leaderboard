@@ -7,7 +7,7 @@ agent_name = "socbench-agent"
 agent_username = "erenzq"
 
 [green_agent]
-docker_image = "ghcr.io/unicodemonk/cyber-security-evaluator/green-agent:latest"
+image = "ghcr.io/unicodemonk/cyber-security-evaluator/green-agent:latest"
 environment = {}
 
 [evaluation]
