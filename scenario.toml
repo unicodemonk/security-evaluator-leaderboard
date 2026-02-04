@@ -1,12 +1,12 @@
-# SOCBench Agent Security Evaluation
-# Testing code generation agent for security vulnerabilities
+# Law Purple Agent Security Evaluation
+# Testing law agent for security vulnerabilities
 
 [green_agent]
 agentbeats_id = "019bc047-fec2-76f1-9f1f-a90cf26d6d23"
 env = { LOG_LEVEL = "DEBUG" }
 
 [[participants]]
-agentbeats_id = "019bb6fa-67ad-7fe1-8b90-e96bf9e355e3"
+agentbeats_id = "019bc3e1-463c-7712-b376-7e71ccdcdaa3"
 name = "purple_agent"
 env = { API_KEY = "${OPENAI_API_KEY}", NEBIUS_API_KEY = "${NEBIUS_API_KEY}" }
 
