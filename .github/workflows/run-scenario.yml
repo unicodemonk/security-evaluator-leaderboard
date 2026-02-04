@@ -336,12 +336,30 @@ jobs:
           git push origin ${{ steps.metadata.outputs.branch_name }}
           echo "::notice title=Submission Branch Created::Your results are ready for submission on branch: ${{ steps.metadata.outputs.branch_name }}"
 
-      - name: Create Pull Request on target repo
-        if: always()
+      - name: Auto-merge results to main (owner repository)
+        if: github.repository == steps.target.outputs.repo
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          set -e
+          echo "Auto-merging to main (owner repository)"
+          git checkout main
+          git merge --no-ff ${{ steps.metadata.outputs.branch_name }} -m "Merge submission: ${{ steps.metadata.outputs.unique_name }}
+          
+          Automated evaluation results.
+          Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git push origin main
+          echo "::notice title=Results Merged::Evaluation results automatically merged to main branch"
+          echo "### ✅ Results merged to main" >> $GITHUB_STEP_SUMMARY
+          echo "Evaluation results have been automatically merged and are now live on the leaderboard!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [View on AgentBeats](https://agentbeats.dev/${{ github.repository_owner }}/cyber-security-evaluator)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Create Pull Request (fork repositories)
+        if: github.repository != steps.target.outputs.repo
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Creating PR for fork submission"
           TARGET_REPO=${{ steps.target.outputs.repo }}
           PR_TITLE="Submission: ${{ steps.metadata.outputs.unique_name }}"
           PR_BODY="Automated submission created by workflow.\n\nWorkflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -352,7 +370,8 @@ jobs:
           RESPONSE=$(curl -s -o /dev/stderr -w "%{http_code}" -X POST -H "Authorization: token ${GH_TOKEN}" -H "Accept: application/vnd.github+json" ${API_URL} -d "$PAYLOAD" ) || true
           echo "PR creation response: $RESPONSE"
 
-      - name: Output PR link
+      - name: Output PR link (fork repositories)
+        if: github.repository != steps.target.outputs.repo
         run: |
           echo "### Submit your results" >> $GITHUB_STEP_SUMMARY
           echo "[Click here to open a pull request](https://github.com/${{ steps.target.outputs.repo }}/compare/main...${{ github.repository_owner }}:${{ github.event.repository.name }}:${{ steps.metadata.outputs.branch_name }}?expand=1)" >> $GITHUB_STEP_SUMMARY
