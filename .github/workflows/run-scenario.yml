@@ -232,7 +232,7 @@ jobs:
                           'recall': data.get('green_agent_metrics', {}).get('recall', 0),
                           'grade': data.get('purple_agent_assessment', {}).get('security_grade', 'N/A'),
                           'purple_score': data.get('purple_agent_assessment', {}).get('security_score', 0),
-                          'vulnerabilities_found': len(undetected_vulns),
+                          'vulnerabilities': data.get('purple_agent_assessment', {}).get('total_vulnerabilities', 0),
                           'total_tests': data.get('total_tests', 0),
                           'status': '',
                           'error': '',
