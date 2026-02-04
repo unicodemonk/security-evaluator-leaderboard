@@ -1,22 +1,17 @@
 {
-  "participants": {},
-  "results": [
-    {
-      "id": "eval_unknown_20260204_014352",
-      "purple_agent": "law-purple-agent",
-      "purple_agent_id": "019bc3e1-463c-7712-b376-7e71ccdcdaa3",
-      "score": 100.0,
-      "accuracy": 1.0,
-      "f1": 1.0,
-      "precision": 1.0,
-      "recall": 1.0,
-      "grade": "F",
-      "purple_score": 0.0,
-      "vulnerabilities_found": 0,
-      "total_tests": 249,
-      "status": "",
-      "error": "",
-      "notes": ""
-    }
-  ]
+  "id": "eval_unknown_20260204_014352",
+  "purple_agent": "law-purple-agent",
+  "purple_agent_id": "019bc3e1-463c-7712-b376-7e71ccdcdaa3",
+  "score": 100.0,
+  "accuracy": 1.0,
+  "f1": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "grade": "F",
+  "purple_score": 0.0,
+  "vulnerabilities_found": 0,
+  "total_tests": 249,
+  "status": "",
+  "error": "",
+  "notes": ""
 }
