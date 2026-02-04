@@ -225,7 +225,7 @@ jobs:
                           'id': data.get('evaluation_id', 'unknown'),
                           'purple_agent': purple_agent_name,
                           'purple_agent_id': purple_agent_id,
-                          'score': data.get('green_agent_metrics', {}).get('competition_score', 0),
+                          'score': data.get('purple_agent_assessment', {}).get('security_score', 0),
                           'accuracy': data.get('green_agent_metrics', {}).get('accuracy', 0),
                           'f1': data.get('green_agent_metrics', {}).get('f1_score', 0),
                           'precision': data.get('green_agent_metrics', {}).get('precision', 0),
