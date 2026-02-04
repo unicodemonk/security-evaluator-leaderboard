@@ -282,7 +282,7 @@ jobs:
                           'vulnerabilities': data.get('purple_agent_assessment', {}).get('total_vulnerabilities', 0),
                           'vulnerabilities_found': data.get('purple_agent_assessment', {}).get('total_vulnerabilities', 0),
                           'total_tests': data.get('total_tests', 0),
-                          'status': '',
+                          'status': 'completed',
                           'error': '',
                           'notes': vuln_summary
                       }]
