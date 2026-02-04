@@ -187,9 +187,8 @@ jobs:
                   purple_agent_id = data.get('purple_agent_id', 'unknown')
                   purple_agent_name = data.get('purple_agent_name', purple_agent_id)
                   error_msg = data.get('error', 'Evaluation failed')
+                  # DuckDB expects each JSON file to be a single result object (not in an array)
                   flattened = {
-                      'participants': {},
-                      'results': [{
                           'id': 'unknown',
                           'purple_agent': purple_agent_name,
                           'purple_agent_id': purple_agent_id,
@@ -205,7 +204,6 @@ jobs:
                           'status': 'evaluation_failed',
                           'error': error_msg,
                           'notes': 'All tests marked invalid due to protocol/communication errors. Agent may not be compatible with evaluator protocol.'
-                      }]
                   }
               else:
                   # Normal case - extract purple agent info from participants
@@ -217,11 +215,9 @@ jobs:
                   all_vulns = data.get('purple_agent_assessment', {}).get('vulnerabilities', [])
                   undetected_vulns = [v for v in all_vulns if not v.get('metadata', {}).get('detected', False)]
                   
-                  # Create structure matching SOCBench format:
-                  # { participants: {...}, results: [{...}] }
+                  # DuckDB expects each JSON file to be a single result object (not wrapped)
+                  # Each file represents ONE evaluation result
                   flattened = {
-                      'participants': participants,
-                      'results': [{
                           'id': data.get('evaluation_id', 'unknown'),
                           'purple_agent': purple_agent_name,
                           'purple_agent_id': purple_agent_id,
@@ -237,7 +233,6 @@ jobs:
                           'status': '',
                           'error': '',
                           'notes': ''
-                      }]
                   }
               
               with open(result_file, 'w') as f:
