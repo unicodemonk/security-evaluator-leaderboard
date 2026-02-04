@@ -12,11 +12,11 @@
       "recall": 1.0,
       "grade": "D",
       "purple_score": 64.84018264840182,
-      "vulnerabilities_found": 0,
       "total_tests": 249,
       "status": "",
       "error": "",
-      "notes": ""
+      "notes": "",
+      "vulnerabilities": 77
     }
   ]
 }
