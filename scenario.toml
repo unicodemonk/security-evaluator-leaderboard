@@ -12,3 +12,4 @@ env = { API_KEY = "${OPENAI_API_KEY}", NEBIUS_API_KEY = "${NEBIUS_API_KEY}" }
 mode = "fixed"
 test_budget = 10
 scenario = "prompt_injection"
+# Final validation run
