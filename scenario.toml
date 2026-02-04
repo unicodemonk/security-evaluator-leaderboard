@@ -7,7 +7,7 @@ agent_name = "socbench-agent"
 agent_username = "erenzq"
 
 [green_agent]
-image = "ghcr.io/unicodemonk/cyber-security-evaluator/green-agent:latest"
+agentbeats_id = "019bb12c-b1ab-76cd-82df-1258f98f83f3"  # cybersecurity-evaluator by unicodemonk
 environment = {}
 
 [evaluation]
