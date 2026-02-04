@@ -4,8 +4,9 @@
 
 ### Main Result Files (for leaderboard)
 - Pattern: `unicodemonk-YYYYMMDD-HHMMSS.json`
-- Format: Single flat object with evaluation metrics
+- Format: `{"participants": {}, "results": [{...}]}`
 - Example: `unicodemonk-20260204-014353.json`
+- **Structure**: Nested with results array (required for AgentBeats DuckDB query)
 
 ### Detailed Evaluation Files
 - Pattern: `*.detailed.json`
@@ -22,13 +23,25 @@
 - Format: Green agent specific data
 - Not used for leaderboard display
 
-## DuckDB Query
+## DuckDB Query Structure
 
-The leaderboard should query only main result files:
-```sql
-SELECT * FROM read_json_auto('results/unicodemonk-*.json')
-WHERE purple_agent_id IS NOT NULL
-  AND purple_agent_id != 'unknown'
+AgentBeats expects the SOCBench-compatible nested format:
+
+```json
+{
+  "participants": {},
+  "results": [
+    {
+      "id": "eval_...",
+      "purple_agent": "agent-name",
+      "purple_agent_id": "019b...",
+      "score": 84.15,
+      "grade": "D",
+      ...
+    }
+  ]
+}
 ```
 
-Do NOT include detailed.json, purple_eval.json, or other supplementary files.
+The DuckDB query accesses the `results` array from each JSON file.
+Each file contains ONE evaluation with results array containing ONE result object.
