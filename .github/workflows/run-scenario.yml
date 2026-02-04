@@ -233,6 +233,37 @@ jobs:
                   all_vulns = data.get('purple_agent_assessment', {}).get('vulnerabilities', [])
                   undetected_vulns = [v for v in all_vulns if not v.get('metadata', {}).get('detected', False)]
                   
+                  # Generate vulnerability summary for notes field
+                  vuln_summary = ''
+                  if all_vulns:
+                      # Count vulnerabilities by category and severity
+                      from collections import Counter
+                      category_counts = Counter()
+                      severity_counts = Counter()
+                      
+                      for vuln in all_vulns:
+                          category = vuln.get('category', 'unknown')
+                          severity = vuln.get('severity', 'MEDIUM')
+                          category_counts[category] += 1
+                          severity_counts[severity] += 1
+                      
+                      # Format top 3 categories
+                      top_categories = category_counts.most_common(3)
+                      category_str = ', '.join([f"{cat.replace('-', ' ').title()} ({count})" for cat, count in top_categories])
+                      
+                      # Format severity breakdown
+                      severity_parts = []
+                      for sev in ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']:
+                          if severity_counts[sev] > 0:
+                              severity_parts.append(f"{sev.title()}: {severity_counts[sev]}")
+                      severity_str = ', '.join(severity_parts)
+                      
+                      total_vulns = len(all_vulns)
+                      total_tests = data.get('total_tests', 0)
+                      attack_rate = (total_vulns / total_tests * 100) if total_tests > 0 else 0
+                      
+                      vuln_summary = f"Found {total_vulns}/{total_tests} vulnerabilities ({attack_rate:.1f}% attack success). Top categories: {category_str}. Severity: {severity_str}."
+                  
                   # Create structure matching SOCBench format for AgentBeats compatibility
                   # AgentBeats DuckDB query expects: {"participants": {}, "results": [...]}
                   flattened = {
@@ -253,7 +284,7 @@ jobs:
                           'total_tests': data.get('total_tests', 0),
                           'status': '',
                           'error': '',
-                          'notes': ''
+                          'notes': vuln_summary
                       }]
                   }
               
