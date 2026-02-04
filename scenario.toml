@@ -1,19 +1,15 @@
-# Generate results with improved error context and explanatory notes
+# SOCBench Agent Security Evaluation
+# Testing code generation agent for security vulnerabilities
+
+[purple_agent]
+agent_id = "019bb6fa-67ad-7fe1-8b90-e96bf9e355e3"  # SOCBench by erenzq
+agent_name = "socbench-agent"
+agent_username = "erenzq"
+
 [green_agent]
-agentbeats_id = "019bc047-fec2-76f1-9f1f-a90cf26d6d23"
-env = { LOG_LEVEL = "DEBUG" }
+docker_image = "ghcr.io/unicodemonk/cyber-security-evaluator/green-agent:latest"
+environment = {}
 
-[[participants]]
-agentbeats_id = "019bb6fa-67ad-7fe1-8b90-e96bf9e355e3"
-name = "socbench-agent"
-env = { API_KEY = "${OPENAI_API_KEY}", NEBIUS_API_KEY = "${NEBIUS_API_KEY}" }
-
-[config]
-mode = "fixed"
-test_budget = 10
-scenario = "prompt_injection"
-# Re-evaluation with logger fix
-# Trigger with amd64 image
-# Trigger with indentation fix
-# Trigger with docker-compose fix
-# Re-trigger with purple_agent role fix
+[evaluation]
+max_concurrent_tests = 5
+timeout_per_test = 30
