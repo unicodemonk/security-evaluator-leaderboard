@@ -1,14 +1,10 @@
 .DS_Store
-docker-compose.yml
-a2a-scenario.toml
 .env
-.env.example
+.venv/
 output/
 
-# Video files (keep final only)
-*.mov
-*.mp4
-!CybersecurityEvaluator*by*Team*.mp4
+# Archive folder (local development only)
+archive/
 
 # Logs
 *.log
@@ -16,3 +12,4 @@ output/
 # Python cache
 __pycache__/
 *.pyc
+*.pyo

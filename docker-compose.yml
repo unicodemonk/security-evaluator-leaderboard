@@ -1,0 +1,64 @@
+# Auto-generated from scenario.toml
+
+services:
+  green-agent:
+    image: ghcr.io/unicodemonk/cyber-security-evaluator/green-agent:latest
+    pull_policy: always
+    platform: linux/amd64
+    container_name: green-agent
+    command: ["python", "green_agents/cybersecurity_evaluator.py", "--host", "0.0.0.0", "--port", "9009", "--card-url", "http://green-agent:9009"]
+    volumes:
+      - ./output:/app/results
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=DEBUG
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "-m", "5", "http://127.0.0.1:9009/.well-known/agent-card.json"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    depends_on:
+      purple_agent:
+        condition: service_started
+    networks:
+      - agent-network
+
+  purple_agent:
+    image: ghcr.io/unicodemonk/cyber-security-evaluator/purple-agent:latest
+    pull_policy: always
+    platform: linux/amd64
+    container_name: purple_agent
+    command: ["--host", "0.0.0.0", "--port", "9009"]
+    environment:
+      - PYTHONUNBUFFERED=1
+      - API_KEY=${OPENAI_API_KEY}
+      - NEBIUS_API_KEY=${NEBIUS_API_KEY}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "-m", "5", "http://127.0.0.1:9009/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    networks:
+      - agent-network
+
+  agentbeats-client:
+    image: ghcr.io/agentbeats/agentbeats-client:v1.0.0
+    platform: linux/amd64
+    container_name: agentbeats-client
+    volumes:
+      - ./a2a-scenario.toml:/app/scenario.toml
+      - ./output:/app/output
+    command: ["scenario.toml", "output/results.json"]
+    depends_on:
+      green-agent:
+        condition: service_started
+      purple_agent:
+        condition: service_started
+    networks:
+      - agent-network
+
+networks:
+  agent-network:
+    driver: bridge
