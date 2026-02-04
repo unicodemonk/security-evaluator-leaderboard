@@ -223,6 +223,9 @@ def generate_a2a_scenario(scenario: dict[str, Any]) -> str:
         participant_lines.append("\n".join(lines) + "\n")
 
     config_section = scenario.get("config", {})
+    # Add purple_agent_id to config if we have a participant with agentbeats_id
+    if participants and "agentbeats_id" in participants[0]:
+        config_section["purple_agent_id"] = participants[0]["agentbeats_id"]
     config_lines = [tomli_w.dumps({"config": config_section})]
 
     return A2A_SCENARIO_TEMPLATE.format(
