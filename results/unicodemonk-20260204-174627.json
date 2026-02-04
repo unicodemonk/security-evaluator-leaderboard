@@ -15,7 +15,7 @@
       "vulnerabilities": 219,
       "vulnerabilities_found": 219,
       "total_tests": 249,
-      "status": "",
+      "status": "completed",
       "error": "",
       "notes": "Found 219/249 vulnerabilities (88.0% attack success). Top categories: System Prompt Extraction (150), Exfiltration (57), Defense Evasion (12). Severity: High: 219."
     }
