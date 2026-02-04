@@ -208,10 +208,11 @@ jobs:
                       }]
                   }
               else:
-                  # Normal case - extract purple agent info from participants
+                  # Normal case - extract purple agent info from evaluator output
+                  # Evaluator outputs purple_agent_name (which is the agent ID)
+                  purple_agent_id = data.get('purple_agent_name', 'unknown')
+                  purple_agent_name = purple_agent_id
                   participants = data.get('participants', {})
-                  purple_agent_id = participants.get('purple_agent', 'unknown') if participants else 'unknown'
-                  purple_agent_name = data.get('purple_agent_name', purple_agent_id)
                   
                   # Only count undetected vulnerabilities (actual successful attacks)
                   all_vulns = data.get('purple_agent_assessment', {}).get('vulnerabilities', [])
