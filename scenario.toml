@@ -13,3 +13,4 @@ mode = "fixed"
 test_budget = 10
 scenario = "prompt_injection"
 # Reorganization Test 1: Home Automation
+# Reorganization Test 1 (Retry after workflow fix)
