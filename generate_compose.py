@@ -215,7 +215,7 @@ def generate_a2a_scenario(scenario: dict[str, Any]) -> str:
     for p in participants:
         lines = [
             f"[[participants]]",
-            f"role = \"{p['name']}\"",
+            f"role = \"purple_agent\"",
             f"endpoint = \"http://{p['name']}:{DEFAULT_PORT}\"",
         ]
         if "agentbeats_id" in p:
