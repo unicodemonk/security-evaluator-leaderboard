@@ -209,15 +209,22 @@ jobs:
                   }
               else:
                   # Normal case - extract purple agent info from evaluator output
-                  # Evaluator outputs both purple_agent_name (display name) and in config purple_agent_id (UUID)
+                  # Evaluator outputs both purple_agent_name (display name) and in evaluation_id the agent UUID
                   purple_agent_name = data.get('purple_agent_name', 'unknown')
-                  # Extract agent ID from evaluation_id which has format: eval_{agent_id}_{timestamp}
+                  # Extract agent ID from evaluation_id which has format: eval_{uuid}_{timestamp}
+                  # UUIDs are in format: 01234567-89ab-cdef-0123-456789abcdef (with hyphens)
                   eval_id = data.get('evaluation_id', '')
-                  if eval_id.startswith('eval_') and eval_id.count('_') >= 2:
-                      parts = eval_id.split('_')
-                      # Format: eval_{uuid-part1-part2-part3-part4-part5}_{timestamp}
-                      # Need to extract the UUID which spans multiple underscore-separated parts
-                      purple_agent_id = '_'.join(parts[1:-1])  # Everything between 'eval_' and final timestamp
+                  if eval_id.startswith('eval_'):
+                      # Remove 'eval_' prefix and split on underscore
+                      # The UUID part ends before the final underscore + 8-digit timestamp
+                      parts = eval_id[5:]  # Remove 'eval_' prefix
+                      # Find last underscore followed by 8 digits (timestamp format: YYYYMMDD)
+                      import re
+                      match = re.match(r'^(.+)_(\d{8}_\d{6})$', parts)
+                      if match:
+                          purple_agent_id = match.group(1)
+                      else:
+                          purple_agent_id = parts.rsplit('_', 1)[0] if '_' in parts else parts
                   else:
                       purple_agent_id = 'unknown'
                   participants = data.get('participants', {})
