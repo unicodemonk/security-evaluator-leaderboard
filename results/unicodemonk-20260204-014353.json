@@ -3,8 +3,8 @@
   "results": [
     {
       "id": "eval_unknown_20260204_014352",
-      "purple_agent": "unknown",
-      "purple_agent_id": "unknown",
+      "purple_agent": "law-purple-agent",
+      "purple_agent_id": "019bc3e1-463c-7712-b376-7e71ccdcdaa3",
       "score": 100.0,
       "accuracy": 1.0,
       "f1": 1.0,
