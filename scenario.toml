@@ -15,3 +15,4 @@ scenario = "prompt_injection"
 # Re-evaluation with logger fix
 # Trigger with amd64 image
 # Trigger with indentation fix
+# Trigger with docker-compose fix
