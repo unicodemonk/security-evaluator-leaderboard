@@ -135,6 +135,9 @@ def resolve_image(agent: dict, name: str) -> None:
     elif has_id:
         info = fetch_agent_info(agent["agentbeats_id"])
         agent["image"] = info["docker_image"]
+        # Store display_name if available
+        if "display_name" in info and info["display_name"]:
+            agent["display_name"] = info["display_name"]
         print(f"Resolved {name} image: {agent['image']}")
     else:
         print(f"Error: {name} must have either 'image' or 'agentbeats_id' field")
@@ -223,9 +226,11 @@ def generate_a2a_scenario(scenario: dict[str, Any]) -> str:
         participant_lines.append("\n".join(lines) + "\n")
 
     config_section = scenario.get("config", {})
-    # Add purple_agent_id to config if we have a participant with agentbeats_id
+    # Add purple_agent_id and display_name to config if we have a participant with agentbeats_id
     if participants and "agentbeats_id" in participants[0]:
         config_section["purple_agent_id"] = participants[0]["agentbeats_id"]
+        if "display_name" in participants[0]:
+            config_section["purple_agent_display_name"] = participants[0]["display_name"]
     config_lines = [tomli_w.dumps({"config": config_section})]
 
     return A2A_SCENARIO_TEMPLATE.format(

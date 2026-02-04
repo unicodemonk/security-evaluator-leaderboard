@@ -209,9 +209,17 @@ jobs:
                   }
               else:
                   # Normal case - extract purple agent info from evaluator output
-                  # Evaluator outputs purple_agent_name (which is the agent ID)
-                  purple_agent_id = data.get('purple_agent_name', 'unknown')
-                  purple_agent_name = purple_agent_id
+                  # Evaluator outputs both purple_agent_name (display name) and in config purple_agent_id (UUID)
+                  purple_agent_name = data.get('purple_agent_name', 'unknown')
+                  # Extract agent ID from evaluation_id which has format: eval_{agent_id}_{timestamp}
+                  eval_id = data.get('evaluation_id', '')
+                  if eval_id.startswith('eval_') and eval_id.count('_') >= 2:
+                      parts = eval_id.split('_')
+                      # Format: eval_{uuid-part1-part2-part3-part4-part5}_{timestamp}
+                      # Need to extract the UUID which spans multiple underscore-separated parts
+                      purple_agent_id = '_'.join(parts[1:-1])  # Everything between 'eval_' and final timestamp
+                  else:
+                      purple_agent_id = 'unknown'
                   participants = data.get('participants', {})
                   
                   # Only count undetected vulnerabilities (actual successful attacks)
