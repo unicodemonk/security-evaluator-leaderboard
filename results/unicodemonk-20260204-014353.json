@@ -16,7 +16,8 @@
       "status": "",
       "error": "",
       "notes": "",
-      "vulnerabilities": 219
+      "vulnerabilities": 219,
+      "vulnerabilities_found": 219
     }
   ]
 }
