@@ -172,7 +172,7 @@ jobs:
           # Flatten the nested JSON structure to match leaderboard query expectations
           result_file="results/${{ steps.metadata.outputs.unique_name }}.json"
           if [ -f "$result_file" ]; then
-            python3 flatten_results.py "$result_file"
+            python3 flatten_results.py "$result_file" "${{ steps.metadata.outputs.timestamp }}"
           else
             echo "No results file to flatten"
           fi

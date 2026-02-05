@@ -9,10 +9,12 @@ from collections import Counter
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: flatten_results.py <result_file>")
+        print("Usage: flatten_results.py <result_file> [timestamp]")
         sys.exit(1)
     
     result_file = Path(sys.argv[1])
+    timestamp = sys.argv[2] if len(sys.argv) > 2 else None
+    
     if not result_file.exists():
         print(f"Error: {result_file} not found")
         sys.exit(1)
@@ -123,7 +125,8 @@ def main():
                 'total_tests': data.get('total_tests', 0),
                 'status': 'completed',
                 'error': '',
-                'notes': vuln_summary
+                'notes': vuln_summary,
+                'timestamp': timestamp
             }]
         }
     
