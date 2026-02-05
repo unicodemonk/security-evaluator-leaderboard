@@ -126,7 +126,7 @@ def main():
                 'status': 'completed',
                 'error': '',
                 'notes': vuln_summary,
-                'timestamp': timestamp
+                'created_at': timestamp
             }]
         }
     
