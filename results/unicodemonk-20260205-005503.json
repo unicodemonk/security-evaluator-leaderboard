@@ -17,7 +17,8 @@
       "total_tests": 249,
       "status": "completed",
       "error": "",
-      "notes": "Found 219/249 vulnerabilities (88.0% attack success). Top categories: System Prompt Extraction (100), Exfiltration (57), Llm Jailbreak (50). Severity: High: 219."
+      "notes": "Found 219/249 vulnerabilities (88.0% attack success). Top categories: System Prompt Extraction (100), Exfiltration (57), Llm Jailbreak (50). Severity: High: 219.",
+      "timestamp": "2026-02-05T00:55:03Z"
     }
   ]
 }
