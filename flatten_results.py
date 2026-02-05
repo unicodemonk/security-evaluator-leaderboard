@@ -20,6 +20,11 @@ def main():
     with open(result_file) as f:
         data = json.load(f)
     
+    # Check if already flattened (has 'results' array at top level)
+    if 'results' in data and isinstance(data.get('results'), list):
+        print(f'File already flattened, skipping: {result_file}')
+        return
+    
     # Check if this is an error result
     if 'error' in data and 'purple_agent_assessment' not in data:
         # Error case - create minimal result with agent info from error payload
